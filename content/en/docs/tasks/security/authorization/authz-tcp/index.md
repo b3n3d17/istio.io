@@ -39,7 +39,7 @@ Before you begin this task, do the following:
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        'echo "port 9000" | nc tcp-echo 9000' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        'echo "port 9000" | nc -i 1 tcp-echo 9000' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     hello port 9000
     connection succeeded
     {{< /text >}}
@@ -47,7 +47,7 @@ Before you begin this task, do the following:
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        'echo "port 9001" | nc tcp-echo 9001' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        'echo "port 9001" | nc -i 1 tcp-echo 9001' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     hello port 9001
     connection succeeded
     {{< /text >}}
@@ -61,7 +61,7 @@ Before you begin this task, do the following:
     $ TCP_ECHO_IP=$(kubectl get pod "$(kubectl get pod -l app=tcp-echo -n foo -o jsonpath={.items..metadata.name})" -n foo -o jsonpath="{.status.podIP}")
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        "echo \"port 9002\" | nc $TCP_ECHO_IP 9002" | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        "echo \"port 9002\" | nc -i 1 $TCP_ECHO_IP 9002" | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     hello port 9002
     connection succeeded
     {{< /text >}}
@@ -99,7 +99,7 @@ If you don’t see the expected output, retry after a few seconds. Caching and p
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        'echo "port 9000" | nc tcp-echo 9000' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        'echo "port 9000" | nc -i 1 tcp-echo 9000' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     hello port 9000
     connection succeeded
     {{< /text >}}
@@ -109,7 +109,7 @@ If you don’t see the expected output, retry after a few seconds. Caching and p
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        'echo "port 9001" | nc tcp-echo 9001' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        'echo "port 9001" | nc -i 1 tcp-echo 9001' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     hello port 9001
     connection succeeded
     {{< /text >}}
@@ -121,7 +121,7 @@ If you don’t see the expected output, retry after a few seconds. Caching and p
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        "echo \"port 9002\" | nc $TCP_ECHO_IP 9002" | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        "echo \"port 9002\" | nc -i 1 $TCP_ECHO_IP 9002" | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     connection rejected
     {{< /text >}}
 
@@ -155,7 +155,7 @@ If you don’t see the expected output, retry after a few seconds. Caching and p
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        'echo "port 9000" | nc tcp-echo 9000' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        'echo "port 9000" | nc -i 1 tcp-echo 9000' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     connection rejected
     {{< /text >}}
 
@@ -165,7 +165,7 @@ If you don’t see the expected output, retry after a few seconds. Caching and p
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        'echo "port 9001" | nc tcp-echo 9001' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        'echo "port 9001" | nc -i 1 tcp-echo 9001' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     connection rejected
     {{< /text >}}
 
@@ -198,7 +198,7 @@ If you don’t see the expected output, retry after a few seconds. Caching and p
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        'echo "port 9000" | nc tcp-echo 9000' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        'echo "port 9000" | nc -i 1 tcp-echo 9000' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     connection rejected
     {{< /text >}}
 
@@ -207,7 +207,7 @@ If you don’t see the expected output, retry after a few seconds. Caching and p
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        'echo "port 9001" | nc tcp-echo 9001' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        'echo "port 9001" | nc -i 1 tcp-echo 9001' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     connection rejected
     {{< /text >}}
 
@@ -238,7 +238,7 @@ If you don’t see the expected output, retry after a few seconds. Caching and p
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        'echo "port 9000" | nc tcp-echo 9000' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        'echo "port 9000" | nc -i 1 tcp-echo 9000' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     connection rejected
     {{< /text >}}
 
@@ -248,7 +248,7 @@ If you don’t see the expected output, retry after a few seconds. Caching and p
     {{< text bash >}}
     $ kubectl exec "$(kubectl get pod -l app=sleep -n foo -o jsonpath={.items..metadata.name})" \
         -c sleep -n foo -- sh -c \
-        'echo "port 9001" | nc tcp-echo 9001' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
+        'echo "port 9001" | nc -i 1 tcp-echo 9001' | grep "hello" && echo 'connection succeeded' || echo 'connection rejected'
     hello port 9001
     connection succeeded
     {{< /text >}}
